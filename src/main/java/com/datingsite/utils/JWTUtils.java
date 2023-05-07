@@ -30,7 +30,8 @@ public class JWTUtils {
         String jsonUserData = objectMapper.writeValueAsString(successfulLoginData);
         String strUserId = String.valueOf(successfulLoginData.getId());
         String strNickName = String.valueOf(successfulLoginData.getNickName());
-        String token = createJWT(strUserId , strNickName , jsonUserData , 0);
+        String strAge = String.valueOf(successfulLoginData.getAge());
+        String token = createJWT(strUserId , strNickName , jsonUserData, strAge , 0);
         return token;
     }
 
