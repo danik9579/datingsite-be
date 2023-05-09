@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,7 +57,7 @@ public class UsersLogic {
             throw new ServerException("Error in updating User" + user.getUserName(), ErrorType.GENERAL_ERROR);
         }
     }
-    
+
     public void removeUser(long userId) throws ServerException {
         try {
             usersDal.deleteById(userId);
@@ -75,10 +76,10 @@ public class UsersLogic {
         }
     }
 
-    public List<UserDto> getAllUsers(int page) throws ServerException {
+    public List<UserDto> getAllUsers(int page , long userId) throws ServerException {
         Pageable paging = PageRequest.of(page - 1 , Constants.RECORDS_PER_PAGE);
         try {
-            List<UserDto> usersDto = usersDal.findAll(paging);
+            List<UserDto> usersDto = usersDal.findAll(paging , userId);
             return usersDto;
         }catch (Exception e){
             throw new ServerException("Error in getting all Users", ErrorType.GENERAL_ERROR);
@@ -162,6 +163,19 @@ public class UsersLogic {
             if (!isContainNumber){
                 throw new ServerException("The password must contain at least one number" + password , ErrorType.INVALID_PASSWORD_MISSING_NUMBER);
             }
+        }
+    }
+
+    @Transactional
+    public boolean isMatch(int userId , int likedId){
+        int isLiked = usersDal.findLikedUser(userId , likedId);
+        if (isLiked == 1) {
+            usersDal.setLike(userId, likedId);
+            usersDal.setMatch(userId, likedId);
+            return true;
+        }else {
+            usersDal.setLike(userId, likedId);
+            return false;
         }
     }
 

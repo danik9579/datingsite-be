@@ -50,9 +50,14 @@ public class UsersController {
         return user;
     }
 
+    @PostMapping("/liked")
+    public boolean isMatch(@RequestParam(name = "mainUser") int userId , @RequestParam(name = "liked") int likedId){
+        return usersLogic.isMatch(userId, likedId);
+    }
+
     @GetMapping
-    public List<UserDto> getAllUsers(@RequestParam("page") int page) throws ServerException {
-        List<UserDto> users = usersLogic.getAllUsers(page);
+    public List<UserDto> getAllUsers(@RequestParam("page") int page , @RequestParam("userId") long userId) throws ServerException {
+        List<UserDto> users = usersLogic.getAllUsers(page , userId);
         return users;
     }
 }

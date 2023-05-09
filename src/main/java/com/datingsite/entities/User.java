@@ -3,6 +3,7 @@ package com.datingsite.entities;
 import com.datingsite.enums.UserType;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="Users")
@@ -25,6 +26,18 @@ public class User {
 
     @Column(name = "GENDER" , nullable = false)
     private String gender;
+
+    @ManyToMany
+    private List<User> likedUsers;
+
+    @ManyToMany
+    private List<User> matches;
+
+    //-1 2
+    //user_user_liked
+    //2 1
+    //user_user_matched
+    //1 2
 
     public User() {
     }
