@@ -17,15 +17,15 @@ public interface IUsersDal extends CrudRepository<User, Long> {
     @Query(value = "SELECT COUNT(*) FROM users_liked_users WHERE user_id = :likedId AND liked_users_id = :userId", nativeQuery = true)
     int findLikedUser(@Param("userId") int userId , @Param("likedId") int likedId);
 
-    @Query("SELECT NEW com.datingsite.dto.SuccessfulLoginData(u.id, u.nickName, u.age , u.gender)" +
+    @Query("SELECT NEW com.datingsite.dto.SuccessfulLoginData(u.id, u.nickName, u.age , u.gender, u.genderOfInterest )" +
             "FROM User u WHERE u.userName= :userName AND u.password= :password")
     SuccessfulLoginData login(@Param("userName")String userName , @Param("password")String password);
 
-    @Query("SELECT NEW com.datingsite.dto.UserDto(u.id, u.userName, u.nickName, u.age , u.gender)" +
+    @Query("SELECT NEW com.datingsite.dto.UserDto(u.id, u.userName, u.nickName, u.age , u.gender, u.genderOfInterest )" +
             "FROM User u WHERE u.id= :userId")
     UserDto findById(@Param("userId")long userId);
 
-    @Query("SELECT NEW com.datingsite.dto.UserDto(u.id, u.userName, u.nickName, u.age , u.gender)" +
+    @Query("SELECT NEW com.datingsite.dto.UserDto(u.id, u.userName, u.nickName, u.age , u.gender, u.genderOfInterest )" +
             "FROM User u WHERE u.id!= :userId")
     List<UserDto> findAll(Pageable paging , @Param("userId")long userId);
     boolean existsByUserName(String userName);

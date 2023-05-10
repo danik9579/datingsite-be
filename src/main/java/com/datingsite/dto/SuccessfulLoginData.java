@@ -1,5 +1,6 @@
 package com.datingsite.dto;
 
+import com.datingsite.enums.Gender;
 import com.datingsite.enums.UserType;
 
 import javax.persistence.Column;
@@ -9,16 +10,16 @@ public class SuccessfulLoginData {
 
     private String nickName;
     private int age;
-    private String gender;
+    private Gender gender;
+    private Gender genderOfInterest;
 
-    public SuccessfulLoginData(Long id,String nickName, int age , String gender) {
+    public SuccessfulLoginData(long id, String nickName, int age, Gender gender, Gender genderOfInterest) {
         this.id = id;
         this.nickName = nickName;
         this.age = age;
         this.gender = gender;
+        this.genderOfInterest = genderOfInterest;
     }
-
-
 
     public Long getId() {
         return id;
@@ -44,12 +45,20 @@ public class SuccessfulLoginData {
         this.age = age;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public Gender getGenderOfInterest() {
+        return genderOfInterest;
+    }
+
+    public void setGenderOfInterest(Gender genderOfInterest) {
+        this.genderOfInterest = genderOfInterest;
     }
 
     @Override

@@ -1,12 +1,12 @@
 package com.datingsite.entities;
 
-import com.datingsite.enums.UserType;
+import com.datingsite.enums.Gender;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="Users")
+@Table(name="users")
 public class User {
     @Id
     @GeneratedValue
@@ -25,7 +25,9 @@ public class User {
     private int age;
 
     @Column(name = "GENDER" , nullable = false)
-    private String gender;
+    private Gender gender;
+    @Column(name = "GENDER_OF_INTEREST" , nullable = false)
+    private Gender genderOfInterest;
 
     @ManyToMany
     private List<User> likedUsers;
@@ -59,12 +61,19 @@ public class User {
         this.age = age;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
+    }
+    public Gender getGenderOfInterest() {
+        return genderOfInterest;
+    }
+
+    public void setGenderOfInterest(Gender genderOfInterest) {
+        this.genderOfInterest = genderOfInterest;
     }
 
     public void setId(long id) {
